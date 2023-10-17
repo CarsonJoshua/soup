@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div>
+        <h4>new soup</h4>
+        <div th:if="${success}" th:text="${success}">
+            issue with success report
+        </div>
+        <div th:if="${error}" th:text="${error}">
+            issue with error report
+        </div>
+        <form action="/create" method="post">
+            <label for="soupName">soup name</label>
+            <input type="text" id="soupName" name="soupName" th:value="${soupName}">
+            <label for="soupName">soup description</label>
+            <input type="text" id="soupDesc" name="soupDesc" th:value="${soupDesc}">
+            <label for="imageAddress">image address</label>
+            <input type="text" id="imageAddress" name="imageAddress" th:value="${imageAddress}">
+            <button type="submit">save soup</button>
+        </form>
+
+    </div>
+    <div>
+        <h4>search soup</h4>
+        <form method="get" action="/search">
+            <input type="search" name="search">
+            <button type="submit">search</button>
+            <a href="/">Clear</a>
+        </form>
+    </div>
+    <div>
+        <h4>soups:</h4>
+        <div th:unless="${soupList}">
+            no soup :(
+        </div>
+        <div th:each = "soup: ${soupList}">
+            <img th:src="${soup.imageAddress}">
+            <div th:text="${soup.soupName}"></div>
+            <div th:text="${soup.soupDesc}"></div>
+            <a type="button" th:href="${'/update/'+soup.soupId}">Edit</a>
+            <a type="button" th:href="${'/delete/'+soup.soupId}">Delete</a>
+        </div>
+    </div>
+
+</body>
+</html>
